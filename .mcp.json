@@ -1,7 +1,0 @@
-{
-  "mcpServers": {
-    "apple-notes": {
-      "command": "${HOME}/.local/share/applesuite/current/notes/bin/apple-notes-mcp"
-    }
-  }
-}
