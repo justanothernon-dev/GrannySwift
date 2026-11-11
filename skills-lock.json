@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "apple-notes": {
+      "source": "sweetrb/apple-notes-mcp",
+      "sourceType": "github",
+      "skillPath": "skills/apple-notes/SKILL.md",
+      "computedHash": "74c165a7f9d74757bf9ba986130b0adb83b57821d825f4a680f40a21e904f557"
+    }
+  }
+}
