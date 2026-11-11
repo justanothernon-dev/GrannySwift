@@ -1,0 +1,15 @@
+{
+  "extraKnownMarketplaces": {
+    "apple-notes-mcp": {
+      "source": {
+        "source": "github",
+        "repo": "sweetrb/apple-notes-mcp"
+      },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true,
+    "apple-notes@apple-notes-mcp": true
+  }
+}
