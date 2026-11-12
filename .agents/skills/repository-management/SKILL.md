@@ -13,11 +13,11 @@ Prefer **Claude Code Desktop or Codex Desktop's native Git and worktree manageme
 
 **Keep the change understandable.** Make focused PRs with an outcome and acceptance evidence. Prefer extending existing providers/components over a second implementation. Remove obsolete code, unused packages, redundant tests and outdated guidance when replacing behavior; if compatibility is truly needed, name the consumer and give the temporary path an accountable retirement condition. Avoid dumping generated assets, build outputs, log files or temporary experiments into Git. When behavior changes, update relevant tests and code-grounded component READMEs in that PR.
 
-**Hand off deliberately.** Record the task/PR, what was changed, verified, blocked and deferred, and whether any uncommitted/unpushed or worktree-local changes must be preserved. Check [documentation consistency](../../../docs/agent-guidance/README.md#guidance-drift-review) before handing off. Do not claim a merge is a running release.
+**Hand off deliberately.** Record the task/PR, what was changed, verified, blocked and deferred, and whether any uncommitted/unpushed or worktree-local changes must be preserved. Do not claim a merge is a running release.
 
 **Clean only completed work.** After a confirmed **merged PR**, verify no other agent/session is using its branch or worktree and inspect for unique, dirty, untracked or unpushed changes. Then remove its completed worktree/local branch and remote branch where appropriate. GitHub's option to delete merged PR branches is a useful opt-in setting, but do not switch settings without approval. Squash merges require actual PR-state checks; `git branch --merged` alone can be misleading. Never treat a closed-but-unmerged PR, an old branch, or an idle worktree as safe to delete. No unattended force deletion of uncertain work; surface it for review.
 
-**Occasional tidying, not endless ceremony.** When the repository becomes harder to navigate or at a relevant milestone, identify duplicate implementations, obsolete compatibility adapters, abandoned PRs/workspaces, redundant documentation and accidental build artifacts. Propose small, verifiable cleanup rather than a new scheduler, daemon or maintenance framework. `CURRENT.md` owns the high-level verified state; PRs and issues own per-task history.
+**Occasional tidying, not endless ceremony.** When the repository becomes harder to navigate or at a relevant milestone, identify duplicate implementations, obsolete compatibility adapters, abandoned PRs/workspaces, redundant documentation and accidental build artifacts. Propose small, verifiable cleanup rather than a new scheduler, daemon or maintenance framework. PRs and issues own per-task history; the repository keeps no status file.
 
 ## GitHub settings and governance
 
@@ -66,4 +66,4 @@ Work through the areas the request touches. **Audit** means: report each area as
    gh api -X PUT repos/OWNER/REPO/private-vulnerability-reporting
    ```
 
-Once a `main` ruleset is active, deliver file changes on a branch with a pull request; write its public PR body with the established agent-guidance standards.
+Once a `main` ruleset is active, deliver file changes on a branch with a pull request; keep its public PR body free of private material (see `AGENTS.md`).

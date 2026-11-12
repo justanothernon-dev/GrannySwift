@@ -1,4 +1,4 @@
-# Agent guidance references
+# Agent instruction references
 
 **Purpose:** The sources behind this repository's coding-agent instructions. Nothing loads this note.  
 **Primary sources reviewed:** November 4, 2026 (America/New_York).

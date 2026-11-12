@@ -38,6 +38,6 @@ Library selections and their intended jobs have one home: [design.md](../design.
 ## Language and coding-agent references
 
 - [The Swift language guide](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/) and [Swift API design guidelines](https://www.swift.org/documentation/api-design-guidelines/): standard facilities and idioms before custom machinery.
-- [Agent guidance sources](agent-guidance-sources-2026-11-04.md): official Codex/Claude instructions, Matt Pocock skills, community examples, and the patterns adopted from them.
+- [Agent instruction sources](agent-instructions-sources-2026-11-04.md): official Codex/Claude instructions, Matt Pocock skills, community examples, and the patterns adopted from them.
 
 The owner's private agent setup and earlier rebuild informed these practices, but this public repository has no dependency on private instructions, accounts, or personal evidence.
