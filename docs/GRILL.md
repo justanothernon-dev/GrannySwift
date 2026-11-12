@@ -1,17 +1,9 @@
 # Next design session
 
-**Purpose:** resume `/grill-with-docs` from this repository, not from a remembered chat.  
+**Purpose:** the open decisions and facts for the first design session, kept here so it can start from the repository and not from a remembered chat.  
 **State:** ready for refinement; the recommendations below have not been accepted.
 
-Read [CURRENT.md](CURRENT.md) for actual project state, [DESIGN.md](DESIGN.md) for locked choices, and [SOURCES.md](SOURCES.md) for the upstream reading map. The owner explicitly requested the capture PR first, with grilling afterward. Do not block this capture on answers or infer acceptance from the instruction to open the PR.
-
-## How to run the session
-
-Use the installed `grill-with-docs` skill when available. It combines `grilling` and `domain-modeling`. Otherwise follow the same method directly: ask the independent decisions whose prerequisites are settled in one numbered round, explain the consequence, recommend an answer, then wait. Investigate repository/library facts yourself; do not make the owner answer questions source inspection can resolve.
-
-Keep locked provider choices intact. Challenge a settled choice only when concrete contradictory evidence is found, and distinguish that evidence from a preference. A source/example implementation is not proof of permission behavior on the target Mac.
-
-Update the owning document after an answer. Use a small glossary for truly ambiguous concepts, and create an ADR only for a consequential, hard-to-reverse tradeoff whose rationale would otherwise be lost. Avoid inventing files before there is information to put in them.
+[design.md](design.md) holds the locked choices and [research/upstream-sources-2026-11-04.md](research/upstream-sources-2026-11-04.md) the upstream reading map. The owner asked for the design capture first, with the design session afterward; the recommendations below are not approvals.
 
 ## Open owner decisions
 
@@ -41,13 +33,3 @@ These are research/acceptance tasks, not preference questions for the owner:
 - Which compatible Core ML artifact preserves the chosen model family, and what accuracy, long-form, speaker, memory, startup, and cancellation behavior does the actual pipeline exhibit?
 
 During planning, read source and existing evidence. Run live checks or benchmarks when an implementation change or explicit verification request justifies them; do not launch a broad test campaign simply to resume the conversation.
-
-## Suggested first-session prompt
-
-> Read AGENTS.md, docs/CURRENT.md, docs/DESIGN.md, docs/GRILL.md, and the relevant upstream sources in docs/SOURCES.md. This PR captures owner decisions; it is not a final build specification. Use /grill-with-docs to resolve the remaining product and implementation boundaries. Preserve the selected providers, Swift-first/minimal-extension principle, public-repository requirements, and the final TSRP-plus-export / FluidAudio decisions. Inspect source before asking factual questions. Ask the independent open choices together, with recommended answers, and record only answers the owner actually gives. Leave naming and command design open until we work through concrete usage and output examples. Do not implement or deploy the whole stack from this brief.
-
-## Suggested workflow after alignment
-
-Use `to-spec` for a multi-session approved slice, `domain-modeling` for terms/tradeoffs as needed, `to-tickets` only when work is ready to decompose, and the available implementation/review skills for the build. Keep one accountable integration owner. A fresh-session handoff should link to these records and name only the remaining work; it should not copy the design into another permanent document.
-
-Completion of this design phase means the relevant choices have owner answers and a scoped specification has observable acceptance criteria. It does not mean every provider has been exercised or the software is installed.

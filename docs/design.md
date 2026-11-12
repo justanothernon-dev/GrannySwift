@@ -1,12 +1,14 @@
-# GrannySwift: initial design capture
+# GrannySwift design
 
-**Status:** Owner decisions captured; detailed design and implementation remain open.  
-**Capture:** November 4, 2026, local conversation date (America/New_York).  
-**Destination:** the public `justanothernon-dev/GrannySwift` repository.
+This describes the system as built, with owner decisions recorded where they shape what gets built. Almost nothing is built yet, so every part below is `(not built)` unless it says it is built. Hard-to-reverse choices and the reasons for them are in [docs/adr/](adr/); questions still open are in [GRILL.md](GRILL.md); upstream sources are in [docs/research/](research/).
 
-This is the organized starting braindump for the rebuild, not a final specification or installation report. It records what was selected, why it matters, what changed during the discussion, and what a fresh coding agent should investigate next. The owner asked to put this record in a PR first and continue `/grill-with-docs` from the repository afterward.
+## Built
 
-The current package is a scaffold with a placeholder executable. The selected libraries below are not all installed. No platform capability is considered working solely because its upstream project advertises it.
+- The GitHub repository is public and holds a Swift Package Manager scaffold: a placeholder `granny` executable that prints the core version, a `GrannyCore` target, and a test target. No Apple provider is integrated.
+- `Package.swift` declares Swift Argument Parser and the SwiftLint build plugin. Swift tools 6.0 with a macOS 14 declaration; CI on macOS 26 runs `swift build`, `swift test` and strict SwiftLint. These settings do not establish a support matrix for the planned providers.
+- No permission host, authorized data integration, notarized release or installed runtime exists.
+
+No platform capability is considered working solely because its upstream project advertises it. A passing placeholder build is not feature parity, permission acceptance or a release.
 
 ## 1. What we are building
 
@@ -24,20 +26,19 @@ Another important constraint:
 
 Those choices favor a small amount of understandable product code around proven native implementations. Efficiency includes latency, process startup, repeated reads, model work, output size, and maintenance effort. It does not justify dropping original content or concealing uncertainty.
 
-## 2. Locked architectural choices
+## 2. Architectural choices
 
-| Decision | Meaning |
+| Choice | Meaning |
 | --- | --- |
 | One primary Swift executable, with compatibility aliases | One coherent product entry point. Final naming, command hierarchy, flags, schemas, and alias behavior still need design. |
-| Swift-first project-owned integration | Replace custom Python routing and adaptation. Keep upstream Python or TypeScript engines where they solve a real problem. |
-| Extend before rebuilding | Inspect the underlying library. Prefer a small natural CLI/library extension to a second implementation. |
-| Beeper CLI route | Extend Beeper's existing CLI selectively; do not start by writing a new direct-SDK Messages engine. Other libraries may be linked directly when that is the simplest useful route. |
+| Extend before rebuilding | Inspect the underlying library. Prefer a small natural CLI/library extension to a second implementation. Other libraries may be linked directly when that is the simplest useful route. |
 | One primary engine per ordinary operation | Avoid duplicate identity/history reads and silent cross-vendor fallbacks. An exception must earn its place with a specific capability. |
 | Coherent signing and permission ownership | Use stable identities and a permission-owning host where required. A shared certificate is not a blanket privacy grant. |
 | Useful, truthful outputs | Compact where helpful, complete where requested, with meaningful identity, coverage, continuation, and verified outcomes. |
 | Public and understandable | Portable instructions, sanitized fixtures, appropriate licensing and release practices, and code explanations that support learning Swift. |
-| WobOS owns agent orchestration | GrannySwift supplies operations and factual events; WobOS owns watch state, cases, decisions, notifications, and recovery checkpoints. |
 | Avoid speculative infrastructure | No general plugin framework, extra scheduler, persistent data store, daemon, or dependency container without a demonstrated requirement. |
+
+Three choices have their own records: [Swift-first glue around upstream engines](adr/0001-swift-first-glue-around-upstream-engines.md), [Messages through Beeper alone](adr/0002-messages-through-beeper-alone.md), and [WobOS owns watch state](adr/0003-wobos-owns-watch-state.md).
 
 A small permission host and a persistent native Messages session can be justified components. They are not permission to build a second orchestration system.
 
@@ -53,9 +54,9 @@ flowchart TD
     Events --> Wob[WobOS watch state and awakening]
 ```
 
-This is a responsibility map, not a finalized process topology. It does not claim that every provider can share one permission grant or run inside one process.
+This is a responsibility map of the planned design `(not built)`, not a finalized process topology. It does not claim that every provider can share one permission grant or run inside one process.
 
-## 3. Provider and capability decisions
+## 3. Provider and capability decisions `(not built)`
 
 | Domain | Selected direction | Boundary |
 | --- | --- | --- |
@@ -63,7 +64,7 @@ This is a responsibility map, not a finalized process topology. It does not clai
 | Send Later | Narrow Swift reader informed by [imsg](https://github.com/openclaw/imsg) | Read scheduled-message records early. No second imsg engine and no scheduling writes implied. |
 | Calendar and Contacts | [Apple PIM](https://github.com/omarshahine/apple-pim) | Reuse the native Swift implementations and preserve valuable existing behavior. |
 | Reminders | [RemCTL](https://github.com/viticci/remctl) | Keep its richer Reminders capabilities rather than reducing scope to EventKit-only operations. |
-| Notes | [Apple Notes MCP](https://github.com/sweetrb/apple-notes-mcp) | Keep separate; no new wrapper for now. |
+| Notes | [Apple Notes MCP](https://github.com/sweetrb/apple-notes-mcp) | Keep separate; no new wrapper for now. icloud-md was considered and excluded. |
 | Photos | [osxphotos](https://github.com/RhetTbull/osxphotos) | Direct existing interface or alias, not a new Photos implementation. |
 | Voice Memos | [TSRP](https://github.com/mattt/TSRP) plus a small export/extraction capability | One library for discovery and local-file resolution; extend around it rather than add another exporter runtime. |
 | Call history | Relevant [iMCP Phone](https://github.com/mattt/iMCP/blob/main/App/Services/Phone.swift) implementation patterns | Read-only locally available missed/incoming/outgoing history, with meaningful scope. |
@@ -105,7 +106,7 @@ Calls and voicemail are read-only scope additions. Local availability, sync cove
 
 Notes MCP stays separately accessible. Photos stays with osxphotos. Neither needs a speculative facade to make a diagram appear uniform. Do not duplicate those engines merely to eliminate every non-Swift dependency.
 
-## 4. Signing, permissions, and local communication
+## 4. Signing, permissions, and local communication `(not built)`
 
 The owner wants a coherent project-wide signing and access story. Design toward a stable signed host for protected operations where needed, while preserving provider-specific permission ownership when consolidation cannot be demonstrated.
 
@@ -117,7 +118,7 @@ The host must expose bounded operations, not arbitrary protected paths or shell 
 
 ## 5. Selected libraries and developer tools
 
-Selection means use the established solution where its job exists. It does not mean install every package now or invent a feature for it.
+Selection means use the established solution where its job exists. It does not mean install every package now or invent a feature for it. Swift Package Manager, Swift Argument Parser and the SwiftLint build plugin are in use (built); everything else in this section is `(not built)`.
 
 | Selection | Intended job |
 | --- | --- |
@@ -137,31 +138,10 @@ Selection means use the established solution where its job exists. It does not m
 
 KeychainAccess or Valet remains a potential choice if the product owns secrets. Inject is relevant to development of a real native UI; Cache to measured, safely cacheable work. Swinject, Needle, GRDB, AudioKit, and direct SwiftSyntax usage remain optional candidates, not automatic additions. SourceKit-LSP supports code intelligence. DocC and the official `swift-format` were researched alternatives, not reasons to run competing documentation/formatting systems.
 
-## 6. Outputs and development quality
+## 6. Outputs and development quality `(not built)`
 
 Useful output is part of the product design. Machine-readable stdout must stay separate from diagnostics. Keep source IDs, time semantics, pagination, data availability, and partial failures usable without flooding the caller with raw vendor payloads. Explicit exports need real file receipts and must retain earlier successes after a later failure. Event framing should be machine-readable; final schemas and naming are deferred to design.
 
-Carry forward the useful lessons from the earlier rebuild: one current source for each decision; component documentation distinct from install receipts; explanations close to non-obvious code; small reversible agent choices labeled as such; real application verification at meaningful milestones; and temporary handoffs that reference durable records rather than duplicating them. Do not import that project's language, orchestration framework, private instructions, or blanket SDK-first policy over GrannySwift's explicit choices.
+Do not import the earlier rebuild's language, orchestration framework, private instructions, or blanket SDK-first policy over GrannySwift's explicit choices.
 
-Keep a practical root README, concise agent instructions, focused folder-level conceptual READMEs for meaningful implemented components, sanitized fixtures, and source attribution. The owner will shape the tone and explanatory framing of those component walkthroughs; coding agents should use source knowledge to maintain their accuracy in that voice, without imposing a rigid documentation template. Contributor policy is not a priority for the kickoff. Use established Swift constructs and flag relevant standard resources while explaining decisions to a learner. Preserve license notices when adapting code. Public usability must not require private paths, accounts, skill installations, or repository access.
-
-## 7. Choices explicitly superseded
-
-| Earlier idea | Current direction |
-| --- | --- |
-| Continue ordinary Beeper + imsg hybrid history | Beeper primary route; imsg is only a source reference for Send Later. |
-| Keep imsg watching alongside Beeper | One Beeper event route plus consumer-owned recovery. |
-| Add icloud-md | Excluded; retain Notes MCP. |
-| Install the separate Voice Memos exporter | TSRP plus a small extraction/export addition; exporter code is reference material. |
-| Prefer Apple's existing transcript before our ASR | FluidAudio generally supplies our own transcripts. |
-| Rewrite every upstream provider into Swift | Swift-first project-owned glue; keep capable upstream engines. |
-| Freeze command names and directory layout now | Design them deliberately in the next phase. |
-| Treat all assistant recommendations as locked | Only explicit owner choices are settled; unresolved recommendations live in GRILL.md. |
-
-## 8. Implementation gates and next step
-
-The remaining evidence gates are: permission ownership and caller boundaries; full Beeper inbox and targeted-action parity; watcher mapping/recovery; Send Later state interpretation; TSRP extraction and format fidelity; locally synced call/voicemail availability; FluidAudio accuracy/diarization/consumer compatibility; and supported toolchain, packaging, licenses, signing, and releases.
-
-These are not reasons to restart library selection. They are the things implementation must demonstrate. Earlier source reviews and selected-conversation experiments do not prove a new installed integration, full inbox latency, or production durability.
-
-The next action is the repository-grounded design session in [GRILL.md](GRILL.md). Refine the interfaces and scope, then write an approved slice specification and proceed in small, verifiable increments. This documentation PR does not install dependencies, alter permissions, implement providers, or authorize a full migration.
+Keep sanitized fixtures and source attribution. Use established Swift constructs and flag relevant standard resources while explaining decisions to a learner. Preserve license notices when adapting code. Public usability must not require private paths, accounts, skill installations, or repository access.
