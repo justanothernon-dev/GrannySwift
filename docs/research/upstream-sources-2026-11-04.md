@@ -33,11 +33,11 @@ This PR changes documentation only. It does not establish a new local build, liv
 | Speech engine | [FluidAudio](https://github.com/FluidInference/FluidAudio) | Check compatible model artifacts, decoding, long-form accuracy, diarization, and full workflow cost rather than extrapolating vendor benchmarks. |
 | Event composition | [Swift Async Algorithms](https://github.com/apple/swift-async-algorithms) | Operators coordinate values over time; they do not provide cross-restart durability. |
 
-Library selections and their intended jobs have one home: [DESIGN.md](DESIGN.md). Popularity counts and earlier performance claims are deliberately not frozen into requirements.
+Library selections and their intended jobs have one home: [design.md](../design.md). Popularity counts and earlier performance claims are deliberately not frozen into requirements.
 
 ## Language and coding-agent references
 
 - [The Swift language guide](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/) and [Swift API design guidelines](https://www.swift.org/documentation/api-design-guidelines/): standard facilities and idioms before custom machinery.
-- [Agent guidance reference register](agent-guidance/README.md): the maintained standalone home for official Codex/Claude instructions, Matt Pocock skills, community examples, adopted patterns, and all-guidance PR drift checks.
+- [Agent guidance sources](agent-guidance-sources-2026-11-04.md): official Codex/Claude instructions, Matt Pocock skills, community examples, and the patterns adopted from them.
 
 The owner's private agent setup and earlier rebuild informed these practices, but this public repository has no dependency on private instructions, accounts, or personal evidence.
