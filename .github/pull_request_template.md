@@ -42,7 +42,7 @@ Set the GitHub pull request title to plain English for what the change does, fol
 <!--
 Title and tickets
 H1 title in plain English, sentence case, no period. Prefix with `Spec build: ` when implementing an approved spec, or `Fix: ` for a bug fix.
-No tickets line: this repository is public and its tracker is private. Only when a public GitHub issue exists, link it directly below the title (`**Issue #123** - [Short name](link)`).
+No tickets line: this repository is public and its tracker is private. Only when a public GitHub issue exists, link it directly below the title (`**Issue #123** - [Short name](https://github.com/{owner}/{repo}/issues/123)`).
 -->
 # {Spec build: Plain-English title}
 
