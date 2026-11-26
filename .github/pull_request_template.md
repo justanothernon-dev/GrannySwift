@@ -4,7 +4,7 @@ Write for a curious, sharp reader who is not a programmer by training and has no
 
 Use plain conversational English instead of shop jargon ("normal working case" rather than "happy path"; "four-part" rather than "four-rung"). Write connected prose in the opener and Rationale. Write short fragments without terminal periods in the File map and Proof block. When a build record or rationale is missing, state that plainly ("the build records do not say why") rather than guessing, because an invented reason reads as the reader's own decision.
 
-Cite settled decisions from this repository's docs, decision records, or public issues rather than quoting private conversations or naming individuals. Give a trade-off's reason as one short clause, then one concise clause that explains it, linked to the decision record when one marks the choice: "A git-only lock was prioritized given minimal synchronization overhead: all three agents commit through git, so there is nothing to keep in step (ADR 40)."
+Quote the reader's own words, in italics and without a date, where they were the reason for a choice. Give a trade-off's reason as one short clause, then one concise clause that explains it, linked to the decision record when one marks the choice: "A git-only lock was prioritized given minimal synchronization overhead: all three agents commit through git, so there is nothing to keep in step (ADR 40)."
 
 Remove every one of these comments, and every part left out, from the finished description. GitHub hides them, but they bloat the text an agent reads back later.
 
@@ -26,7 +26,7 @@ Size follows what the reader must learn or decide, not how much work went in. De
 - Small fix or prose edit (1-3 files, no spec, no architecture shift): keep the H1 title, optional ticket line, a 2-3 sentence opener, a brief Proof note, and Impact & rollback only if non-obvious. Delete the visual, Walkthrough line, Rationale, How it works now (unless one diff block shows the whole edit), File map, Deviations, and Decisions & tracking.
 - Medium change: keep sections with real substance; delete Walkthrough, roadmap alignment, and File map (for 5 or fewer files).
 - Substantial or spec build: keep the full structure below.
-Include a closing `Closes #N` line only when closing a public GitHub issue; never include private tracker IDs.
+Keep the closing `Closes` line at every size, even when `Decisions & tracking` is deleted, because that line is what moves the ticket.
 Triggers that add a part at any size: an approved spec (the `Spec build:` title, full Rationale, a visual); a change to how parts connect, a new integration, or an edit to shared instructions or hooks (the Walkthrough line); more than 5 files (the File map); a new repo term (it is taught in the opener); a real deviation, open call, or non-obvious limit (that section).
 
 Formatting and GitHub rendering
@@ -34,17 +34,17 @@ Formatting and GitHub rendering
 - Fenced `diff` blocks: use for exact before/after instruction or config diffs and for the Proof block. GitHub neither wraps fenced lines nor renders bold or links inside fences, so place clickable links in the prose above, and keep every Proof line under ~85 characters. An instruction diff shows each line whole even when it is long, because the exact wording is what the reader approves.
 - Markdown tables: use only for compact multi-attribute comparisons with few-word cells (such as benchmarks); use fenced `diff` blocks or grouped bullets instead of wide prose tables.
 
-Public repository and tracking
-This repository is public. Never include personal names, owner quotes, emails, local home paths, private tracker IDs or URLs, private review links, or private repository names in the title, description, commits, or fixtures.
-Set the GitHub pull request title to plain English for what the change does (add `(#123)` only for a public GitHub issue). Omit private ticket lines and `Closes` lines, and close any private tracker items after the merge. Add no tool-generated footer.
+Public repositories and tracking
+Never include personal names, private tracker URLs, or private repository references in a public repository. Omit the Tickets line there or link public GitHub issues (`#123`) only.
+Set the GitHub pull request title to plain English for what the change does, followed by the primary ticket ID in parentheses when tracked (e.g., `Add the pull request template and drift check (ISSUE-56)`). End the description with one visible `Closes` line naming every ticket this pull request finishes, because that line is what moves each ticket when it merges. In a public repository with a private tracker, leave that line out and close the tickets after the merge. Add no tool-generated footer.
 -->
 
 <!--
-Title and public issues
+Title and tickets
 H1 title in plain English, sentence case, no period. Prefix with `Spec build: ` when implementing an approved spec, or `Fix: ` for a bug fix.
-Link public GitHub issues (`**Issue #123** - [Short name](link)`) directly below only if a public GitHub issue exists; never add private tracker IDs or links.
+No tickets line: this repository is public and its tracker is private. Only when a public GitHub issue exists, link it directly below the title (`**Issue #123** - [Short name](link)`).
 -->
-# {Plain-English title}
+# {Spec build: Plain-English title}
 
 <!--
 Opener (no heading; one paragraph, four beats):
@@ -59,18 +59,20 @@ On a spec build with no material deviations, close the paragraph with one italic
 <!--
 Visual and walkthrough (place directly below the opener so it trims opener prose; delete on small fixes or prose-only edits):
 Choose one visual by kind of change:
-- Spec build, multi-step workflow, or architecture mechanism: an animated SVG (self-contained, with CSS @keyframes or SMIL, dark mode via prefers-color-scheme, reduced motion via prefers-reduced-motion, <title> and <desc>, no JS; purposeful motion showing the mechanism, with no decorative loops). A diagram that documents lasting design is committed to `docs/diagrams/{name}.svg` on the PR branch and linked from `docs/design.md` or the ADR. A one-off that should not live on `main` goes on a long-lived side branch (`pr-assets`), or is drawn as inline Mermaid. Either way, embed it by commit, `https://github.com/{owner}/{repo}/blob/{commit sha}/{path}.svg?raw=true`, so it keeps working after the branch is deleted. Open the pull request page once and check that it renders. Never embed raw <svg> tags or bare relative paths in a GitHub PR body.
+- Spec build, multi-step workflow, or architecture mechanism: an animated SVG (self-contained, with CSS @keyframes or SMIL, dark mode via prefers-color-scheme, reduced motion via prefers-reduced-motion, <title> and <desc>, no JS). Motion shows the mechanism, with no decorative loops. A diagram that documents lasting design is committed to `docs/diagrams/{name}.svg` on the PR branch and linked from docs/design.md or the ADR. A one-off that should not live on `main` goes on a long-lived side branch (`pr-assets`), or is drawn as inline Mermaid. Either way, embed it by commit, `https://github.com/{owner}/{repo}/blob/{commit sha}/{path}.svg?raw=true`, so it shows in a private repo and keeps working after the branch is deleted. Open the pull request page once and check that it renders. Never embed raw <svg> tags or bare relative paths in a GitHub PR body.
 - Simpler static flow or module map: an inline ```mermaid block.
 - App or UI change: a screenshot, before/after pair, or short GIF.
 - Instruction or config-only change: omit here and show real diff blocks in "How it works now".
 
 Follow the visual with one *italicized sentence* narrating what it shows in plain English.
 
-Walkthrough: on substantial PRs (large or sensitive changes, shifts in how modules connect, new provider integrations, or shared-instruction changes), cover the four parts (Boundaries, Data flow, Failure modes, Trade-offs) in an in-repo doc or folder-level `README.md` and link it below; never link a private review page. If triggered and skipped, write `Walkthrough: none added for this pull request (see Deviations).` On all other PRs, delete the Walkthrough line.
+Walkthrough: include only on substantial PRs (large or sensitive changes, shifts in how modules connect, new integrations, global-instruction or hook changes). Build the four-part page (Boundaries, Data flow, Failure modes, Trade-offs) via the `walkthrough` skill and link it below. If triggered and skipped, write `Walkthrough: none built for this pull request (see Deviations).` On all other PRs, delete the Walkthrough line.
 -->
 ![{What the picture shows}](https://github.com/{owner}/{repo}/blob/{commit sha}/{path}.svg?raw=true)
 
 *{One plain-English sentence narrating the visual.}*
+
+Walkthrough: {link to the four-part walkthrough page, or delete this line}
 
 ## Rationale
 
@@ -80,16 +82,16 @@ Open with `**The principle: <core concept>.**` plus 1-2 sentences teaching the u
 
 Then, when more than one driver follows, one lead-in line saying how many and from where ("Three findings from the research shaped it:"), and one block per major design driver (usually 1-3):
 1. Standalone bold header in regular font, no terminal period.
-2. One paragraph on what led to it: link any prior ADR or section of `docs/design.md` and state what it decided, cite the concrete requirement or constraint without quoting private conversations or naming individuals, and cite outside ideas per the glossary rule.
+2. One paragraph on what led to it: link any prior ADR and state what it decided, weave in the reader's own words or prior picks as evidence (in italics, no date), and cite outside ideas per the glossary rule.
 3. One to three bullets starting with `- Now,...` stating the concrete change. A chosen trade-off gets one short clause and one concise explanatory clause, linked to its decision record when there is one.
 
 Example block:
-**Use one primary provider for Messages instead of a hybrid**
+**Lock the exam in git, not in three agent settings files**
 
-Splitting Messages reads across two engines created conflicting conversation identities and silent fallback behavior. The design keeps one source of truth for normal reads, actions, media, and events.
+In ADR 27, where we decided each approved scenario gets a failing test first, nothing stopped an agent from bending tests to fit buggy code. In review the reader asked, *"{their own words}"*, and picked a human-team split.
 
-- Now, ordinary Messages operations go through one upstream CLI, extended minimally where needed.
-- A single-engine route was chosen over a fallback hybrid to keep identity and history consistent (e.g., ADR 0002).
+- Now, before a worker builds, a git lock blocks edits to the failing acceptance tests the build lead writes first.
+- A git-only lock was prioritized given minimal synchronization overhead: all three agents commit through git, so there is nothing to keep in step (ADR 40).
 
 If this PR is one slice of a larger research report or roadmap, close Rationale with:
 **How this matches <report or roadmap>:**
@@ -192,9 +194,8 @@ Keep every bullet that applies to this pull request; delete bullets that do not 
 <!--
 Keep only subsections with real content; delete this entire section when nothing applies. Accepted limitations cite their decision record, never a separate open-items file.
 - **Decided:** calls already settled during review so they are not re-asked.
-- **Waiting on your go:** put each requested action on its own bold line, followed by concise context and a bold **Recommendation:** (no private review or tracker links in this public repository).
+- **Waiting on your go:** put each requested action on its own bold line, followed by concise context, a bold **Recommendation:**, and a link to where it can be answered, if there is one.
 - **Accepted limitations:** non-blocking caveats logged in an ADR (link the ADR and state what it chose). When a limitation appears to conflict with how the system normally works, explain the underlying mechanism in one sentence so the reader sees why.
-- **Closing public issues:** add `Closes #N` at the end only when closing a public GitHub issue; never add private tracker IDs.
 -->
 
 **Decided:** {Resolved call, or delete}
@@ -204,3 +205,5 @@ Keep only subsections with real content; delete this entire section when nothing
 
 **Accepted limitations** (no action needed to merge; logged in {ADR N}, where we chose {brief summary}):
 - **{Limitation}:** {Underlying mechanism in plain English, then practical effect.}
+
+Closes {TEAM-N}, {TEAM-N}
