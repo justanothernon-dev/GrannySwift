@@ -66,3 +66,15 @@ fastlane/test_output
 .codex/config.toml
 DerivedData/
 .swiftpm/
+
+# Local Xcode agent skills (generated locally via `xcrun agent skills export`; excluded under Xcode SLA)
+.agents/skills/device-interaction
+.agents/skills/modernize-tests
+.agents/skills/swiftui-specialist
+.agents/skills/swiftui-whats-new-27
+.agents/skills/xctrace
+.claude/skills/device-interaction
+.claude/skills/modernize-tests
+.claude/skills/swiftui-specialist
+.claude/skills/swiftui-whats-new-27
+.claude/skills/xctrace

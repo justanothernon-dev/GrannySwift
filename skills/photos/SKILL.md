@@ -5,10 +5,12 @@ description: Apple Photos through the `photos` CLI (osxphotos). Find photos, alb
 
 # Photos
 
-`photos` is the `osxphotos` CLI itself, with no wrapper. `photos COMMAND --help` is the reference; this file holds what the help leaves out. Source-checked against osxphotos 0.77.2.
+`photos` is the `osxphotos` CLI itself, with no wrapper. `photos COMMAND --help` is the reference; this file holds what the help leaves out. Source-checked against osxphotos 0.78.1.
 
 - **Keep reads read-only.** A request to find a photo does not authorize importing, editing metadata, changing the active library or deleting assets. Follow the owner's exact effect for mutations; native support is not permission to act.
-- **Shared albums are unreadable on macOS 26.x** (vendor README). A missing shared album or missing items in one is a coverage gap, not an empty album.
+- **Project JSON fields on queries.** Default `photos query --json` emits ~100 keys (~1,485 tokens per photo). Pass `--field` projections (for example `--field uuid '{uuid}' --field created '{created}' --field name '{original_name}'`) together with `--mute` to cut payload size roughly 63x (~23 tokens per photo).
+- **Shared albums on macOS 26+:** Shared albums are readable via `ZSHARE`, though secondary sort-order and edge metadata caveats remain open upstream (`#2003`). An unexpected order or missing field in a shared album can still be an upstream gap rather than an empty album.
+- **Updates:** Upgrade through `uv tool upgrade osxphotos` (no Homebrew formula exists; avoid `osxphotos update` inside a `uv` tool environment).
 - **Import goes into the library Photos.app has open.** `--library` only points osxphotos' duplicate lookup at a library; it does not select the destination. `photos list --json` gives `system_library` and `last_library`. Settle the destination before importing, and query that same library afterward.
 - **Unattended import:** `--skip-dups --no-progress --report FRESH.json`, with a new report path per job (`--report` overwrites).
   - `--dry-run` writes no report.
