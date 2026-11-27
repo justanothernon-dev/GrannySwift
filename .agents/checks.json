@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "name": "swift-build",
+      "run": [
+        "swift",
+        "build",
+        "-Xswiftc",
+        "-no-color-diagnostics"
+      ],
+      "error": "^.+?\\.swift:\\d+:\\d+: (?:\\u001b\\[[0-9;]*m)*error:",
+      "files": [
+        ".swift"
+      ]
+    },
+    {
+      "name": "swiftlint",
+      "run": [
+        "swiftlint",
+        "--strict",
+        "--quiet"
+      ],
+      "error": "^.+?\\.swift:\\d+:(?:\\d+: )?(?:error|warning):",
+      "files": [
+        ".swift"
+      ]
+    }
+  ]
+}
