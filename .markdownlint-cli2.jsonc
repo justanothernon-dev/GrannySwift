@@ -1,0 +1,15 @@
+// Markdown lint for the standardised files. The workflow and a local run use the same globs:
+//   npx --yes markdownlint-cli2
+{
+  "config": {
+    "default": true,
+    // These files keep one paragraph per line by design.
+    "MD013": false
+  },
+  "globs": [
+    "AGENTS.md",
+    "docs/adr/**/*.md",
+    "skills/**/*.md",
+    ".agents/skills/repository-management/SKILL.md"
+  ]
+}

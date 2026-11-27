@@ -1,0 +1,19 @@
+name: Markdown lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: DavidAnson/markdownlint-cli2-action@v25
+        with:
+          globs: |
+            AGENTS.md
+            docs/adr/**/*.md
+            skills/**/*.md
+            .agents/skills/repository-management/SKILL.md
